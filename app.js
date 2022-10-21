@@ -47,17 +47,17 @@ function newsSearch(topic){
 
 }
 
-// //grab the submit button
-// $("input[type=submit]").on("click", (event) => {
+//grab the submit button
+$("input[type=submit]").on("click", (event) => {
 
-//     // prevent the refresh
-//     event.preventDefault()
+    // prevent the refresh
+    event.preventDefault()
 
-//     // grab text from input box
-//     const inputText = $("input[type=text]").val()
+    // grab text from input box
+    const inputText = $("input[type=text]").val()
     
-//     // update the screen
-//     newsSearch(inputText)
-// })
+    // update the screen
+    newsSearch(inputText)
+})
 
 newsSearch("Tesla")
