@@ -1,0 +1,51 @@
+.big-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-areas: 
+    "one one one"
+    "two three four"
+    "five five five";
+    background-color: gray;
+    height: 100vh;
+    margin: auto;
+  }
+
+  header {
+    background-color: red;
+    grid-area: one;
+  }
+
+  .header {
+    display: inline;
+  }
+
+  .left {
+    background-color: blue;
+    grid-area: two;
+  }
+
+  main {
+    background-color: yellow;
+    grid-area: three;
+  }
+
+  .right {
+    background-color: green;
+    grid-area: four;
+  }
+
+  footer {
+    background-color: purple;
+    grid-area: five;
+  }
+
+  .header-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-areas: 
+    "one one one"
+    "two three four"
+    "five five five";
+  }
