@@ -1,4 +1,4 @@
-.big-container {
+.container {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 1fr 5fr 1fr;
@@ -20,23 +20,23 @@
     display: inline;
   }
 
-  .left {
+  /* .left {
     background-color: blue;
     grid-area: two;
-  }
+  } */
 
   main {
-    background-color: yellow;
+    background-color: green;
     grid-area: three;
   }
 
-  .right {
-    background-color: green;
+  /* .right {
+    background-color: purple;
     grid-area: four;
-  }
+  } */
 
   footer {
-    background-color: purple;
+    background-color: yellow;
     grid-area: five;
   }
 

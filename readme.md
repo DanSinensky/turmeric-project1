@@ -1,6 +1,6 @@
-# The Aggregate Press Informer
+# Card Table Simulator
 
-A news application that creates customizable front pages by topic/date/reporter/outlet, saves them in localstorage, and links to the full articles for later reading
+An application that allows the user to make and use decks of playing cards with custom backs, and save the board state (who has what cards and the position of the cards on the the table) to local storage. App will differentiate between faceup and facedown cards, as well as cards that the player is allowed to look at and not look at.
 
 ### Technologies Used
 
@@ -10,22 +10,24 @@ A news application that creates customizable front pages by topic/date/reporter/
 - jQuery
 - Google Fonts
 - API
-  - News API
+  - Deck of Cards API
   
 ### Wireframes
 
-![My Wireframe](https://i.ytimg.com/vi/mRf3-JkwqfU/mqdefault.jpg)
+![Image](https://i.ytimg.com/vi/mRf3-JkwqfU/mqdefault.jpg)
+![Desktop Wireframe](https://imgur.com/TqHI7gi)
+![Mobile Wireframe](https://imgur.com/b8ELt2w)
 
 ### Daily Plan
 
 | Day | Goal |
 |-----|------|
-| 1 - Saturday | Finalize API, README.md, wireframe. Create working AJAX callback and event listener to change stories |
-| 2 - Sunday | Create DOM manipulation with AJAX to filter stories |
-| 3 - Monday | Create DOM manipulation to customize where stories are on page |
-| 4 - Tuesday | Localstorage to save pages |
-| 5 - Wednesday | Create carousel of stored pages |
-| 6 - Thursday | Create nav bar, move filter to nav bar, improve filter |
+| 1 - Saturday | Finalize API, README.md, and wireframe. Create working AJAX callback to build deck. Build "table" in HTML and cards in JS |
+| 2 - Sunday | Create DOM manipulation with AJAX to remove individual cards from deck and move them around screen |
+| 3 - Monday | Create DOM manipulation with AJAX to create piles of cards and move them around together |
+| 4 - Tuesday | Create functions to move cards from table to hands and back |
+| 5 - Wednesday | Create DOM manipulation to change card backs and save to local storage |
+| 6 - Thursday | Local storage to save game state. Create carousel of games |
 | 7 - Friday | CSS and final touches/catch-up |
 
 ### Link to Project
