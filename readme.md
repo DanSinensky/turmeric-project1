@@ -14,7 +14,6 @@ An application that allows the user to make and use decks of playing cards with 
   
 ### Wireframes
 
-![Image](https://i.ytimg.com/vi/mRf3-JkwqfU/mqdefault.jpg)
 ![Desktop Wireframe](https://imgur.com/TqHI7gi)
 ![Mobile Wireframe](https://imgur.com/b8ELt2w)
 
