@@ -14,8 +14,8 @@ An application that allows the user to make and use decks of playing cards with 
   
 ### Wireframes
 
-![Desktop Wireframe](https://imgur.com/TqHI7gi)
-![Mobile Wireframe](https://imgur.com/b8ELt2w)
+![Desktop Wireframe](https://i.imgur.com/TqHI7gi.png)
+![Mobile Wireframe](https://i.imgur.com/b8ELt2w.png)
 
 ### Daily Plan
 
