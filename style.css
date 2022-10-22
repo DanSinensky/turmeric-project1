@@ -1,11 +1,11 @@
 .container {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-rows: 0.75fr 4fr 0.75fr;
     grid-template-areas: 
     "one one one"
-    "two three four"
-    "five five five";
+    "two two two"
+    "three three three";
     background-color: gray;
     height: 100vh;
     margin: auto;
@@ -16,18 +16,14 @@
     grid-area: one;
   }
 
-  .header {
-    display: inline;
-  }
-
   /* .left {
     background-color: blue;
-    grid-area: two;
+    grid-area: five;
   } */
 
   main {
     background-color: green;
-    grid-area: three;
+    grid-area: two;
   }
 
   /* .right {
@@ -37,10 +33,10 @@
 
   footer {
     background-color: yellow;
-    grid-area: five;
+    grid-area: three;
   }
 
-  .header-container {
+  /* .header-container {
     display: grid;
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 1fr 5fr 1fr;
@@ -48,4 +44,15 @@
     "one one one"
     "two three four"
     "five five five";
+  } */
+
+  .deck {
+    background-position-x: center;
+    background-position-y: center;
+    width: 226px;
+    height: 314px;
+    border: solid 1px black;
+    background-color: white;
   }
+
+  

@@ -20,18 +20,33 @@ function newGame(){
     function render() {
 
         // render the data
+        const $header = $("header")
         const $main = $("main")
         const $footer = $("footer")
+        const $deck = $(".deck")
 
         const $deck_id = cards.deck_id
         const $cards_remaining = cards.remaining
+        const $draw = `${baseURL}api/deck/${$deck_id}/draw/count=1`
+        //https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=2
 
         $main.html(
             `<h2>${$deck_id}</h2>
             <h3>${$cards_remaining}`)
+
+        
     }
 
 }
+
+// const forEachElementAndIndex = (arr) => {
+//     arr.forEach((element, index) =>{
+//         names.push(element.name)
+//     })
+//     console.log(names)
+// }
+
+//forEachElementAndIndex(dogs)
 
 
 //grab the submit button
@@ -48,5 +63,15 @@ function newGame(){
 //     saveGave(inputText)
 //     $textInput.val("")     
 //})
+
+function testDraw() {
+    $draw
+}
+
+const $button = $("button")
+$button.on("click", () => {
+    testDraw()
+    // $div.toggleClass("cheese")
+})
 
 newGame()
