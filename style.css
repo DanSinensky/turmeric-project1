@@ -16,35 +16,15 @@
     grid-area: one;
   }
 
-  /* .left {
-    background-color: blue;
-    grid-area: five;
-  } */
-
   main {
     background-color: green;
     grid-area: two;
   }
 
-  /* .right {
-    background-color: purple;
-    grid-area: four;
-  } */
-
   footer {
     background-color: yellow;
     grid-area: three;
   }
-
-  /* .header-container {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    grid-template-rows: 1fr 5fr 1fr;
-    grid-template-areas: 
-    "one one one"
-    "two three four"
-    "five five five";
-  } */
 
   .deck {
     background-position-x: center;

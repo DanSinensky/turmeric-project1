@@ -1,16 +1,30 @@
 // variable for base url
 const baseURL = "https://deckofcardsapi.com/"
 
+function draw(deck) {
+    $.ajax(`${baseURL}api/deck/${deck}/draw/?count=1`)
+    .then((data) => {
+        console.log(data.cards)
+    })
+}
+draw($deck_id)
+ 
 // function that creates game
 function newGame(){
     // constructing url for request
-    // Basic URL for stories about a topic from the last month
-    const newGameUrl = `${baseURL}api/deck/new/shuffle/?deck_count=1`
+    const newGameURL = `${baseURL}api/deck/new/shuffle/?deck_count=1`
+
     
-    $.ajax(newGameUrl)
+    $.ajax(newGameURL)
+
+    const request = fetch(newGameURL)
+    
+    request.then((response) => {
+        return response.json()
+    })
     .then((data) => {
         console.log(data)
-        cards = data
+        deck = data
         render()
         },
         (error) => {
@@ -25,53 +39,13 @@ function newGame(){
         const $footer = $("footer")
         const $deck = $(".deck")
 
-        const $deck_id = cards.deck_id
-        const $cards_remaining = cards.remaining
-        const $draw = `${baseURL}api/deck/${$deck_id}/draw/count=1`
-        //https://deckofcardsapi.com/api/deck/<<deck_id>>/draw/?count=2
+        const $deck_id = deck.deck_id
+        const $cards_remaining = deck.remaining
 
         $main.html(
             `<h2>${$deck_id}</h2>
             <h3>${$cards_remaining}`)
-
-        
-    }
-
 }
-
-// const forEachElementAndIndex = (arr) => {
-//     arr.forEach((element, index) =>{
-//         names.push(element.name)
-//     })
-//     console.log(names)
-// }
-
-//forEachElementAndIndex(dogs)
-
-
-//grab the submit button
-// $("input[type=submit]").on("click", (event) => {
-
-//     // prevent the refresh
-//     event.preventDefault()
-
-//     // grab text from input box
-//     const inputText = $("input[type=text]").val()
-//     const $textInput = $("input[type=text]")
-    
-//     // update the screen
-//     saveGave(inputText)
-//     $textInput.val("")     
-//})
-
-function testDraw() {
-    $draw
 }
-
-const $button = $("button")
-$button.on("click", () => {
-    testDraw()
-    // $div.toggleClass("cheese")
-})
 
 newGame()
