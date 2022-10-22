@@ -35,16 +35,18 @@ function newGame(){
 
 
 //grab the submit button
-$("input[type=submit]").on("click", (event) => {
+// $("input[type=submit]").on("click", (event) => {
 
-    // prevent the refresh
-    event.preventDefault()
+//     // prevent the refresh
+//     event.preventDefault()
 
-    // grab text from input box
-    const inputText = $("input[type=text]").val()
+//     // grab text from input box
+//     const inputText = $("input[type=text]").val()
+//     const $textInput = $("input[type=text]")
     
-    // update the screen
-    starSearch(inputText)
-})
+//     // update the screen
+//     saveGave(inputText)
+//     $textInput.val("")     
+//})
 
 newGame()
