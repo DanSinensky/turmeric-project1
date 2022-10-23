@@ -68,8 +68,8 @@ function draw($deck_id){
     })
     .then((data) => {
         console.log(data)
-        draw = data
-        console.log(draw.cards)
+        cards = data
+        console.log(cards.cards)
         },
         (error) => {
             console.log('bad request', error)
