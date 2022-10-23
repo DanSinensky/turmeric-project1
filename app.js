@@ -9,12 +9,6 @@ function newGame(){
     
     // make AJAX request
     $.ajax(newGameURL)
-
-    const request = fetch(newGameURL)
-    
-    request.then((response) => {
-        return response.json()
-    })
     .then((data) => {
         console.log(data)
         deck = data
@@ -39,7 +33,11 @@ function newGame(){
 
         $main.html(
             `<h2>${$deck_id}</h2>
-            <h3>${$cards_remaining}`)
+            <h3>${$cards_remaining}</h3>
+            <div class="board">
+                <div id="deck"></div>
+            <button>Draw</button>
+            </div>`)
 
         
 //Working draw on start
@@ -49,7 +47,6 @@ function newGame(){
             //         console.log(data.cards)
             //     })
             // draw a card
-            return $deck_id
             }
 
 }
@@ -58,29 +55,24 @@ function newGame(){
 
 newGame()
 
-function draw($deck_id){
-    const drawURL = `${baseURL}api/deck/${$deck_id}/draw/count=1`
+function draw(){
+    const drawURL = `${baseURL}api/deck/crsk1qux59kc/draw/count=1`
     $.ajax(drawURL)
-    const request = fetch(drawURL)
-    
-    request.then((response) => {
-        return response.json()
-    })
     .then((data) => {
         console.log(data)
-        cards = data
-        console.log(cards.cards)
+        deck = data
+        console.log(deck.cards)
         },
         (error) => {
             console.log('bad request', error)
         }
     )
 }
-draw($deck_id)
+draw()
 // shuffle cards remaining in deck
 // function shuffle($deck_id){
 //     const shuffleURL = `${baseURL}api/deck/${$deck_id}/shuffle/?remaining=true`
 // }
 
 const $button = document.querySelector("button")
-$($button).on("click", draw($deck_id))
+$($button).on("click", draw())
