@@ -5,7 +5,7 @@ const baseURL = "https://deckofcardsapi.com/"
 // function that creates game
 function newGame(){
     // constructing url for request
-    const newGameURL = `${baseURL}api/deck/new/shuffle/?deck_count=1`
+    const newGameURL = `${baseURL}api/deck/crsk1qux59kc/shuffle/?deck_count=1`
     
     // make AJAX request
     $.ajax(newGameURL)
