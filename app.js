@@ -1,7 +1,6 @@
 // variable for base url
 const baseURL = "https://deckofcardsapi.com/"
 
-// 
 // function that creates game
 function newGame(){
     // constructing url for request
@@ -39,11 +38,10 @@ function newGame(){
             <button>Draw</button>
             </div>`)
 
-            function draw(deck){
-                const drawURL = `${baseURL}api/deck/${deck}/draw/count=1`
+            function draw(){
+                const drawURL = `${baseURL}api/deck/${$deck_id}/draw/count=1`
                 $.ajax(drawURL)
                 .then((data) => {
-                    console.log(data)
                     cards = data
                     console.log(cards.cards)
                     },
@@ -52,16 +50,14 @@ function newGame(){
                     }
                 )
             }
-            draw($deck_id)
             }
 
 }
-
 newGame()
+
 // shuffle cards remaining in deck
 // function shuffle($deck_id){
 //     const shuffleURL = `${baseURL}api/deck/${$deck_id}/shuffle/?remaining=true`
 // }
-
 const $button = document.querySelector("button")
-$($button).on("click", draw($deck_id))
+            $($button).on("click", draw())
