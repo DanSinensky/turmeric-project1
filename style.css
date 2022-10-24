@@ -31,14 +31,14 @@
     grid-area: four;
   }
 
-  .deck {
+  /* .deck {
     background-position-x: center;
     background-position-y: center;
     width: 226px;
     height: 314px;
     border: solid 1px black;
     background-color: white;
-  }
+  } */
 
   h1 {
     font-size: 2rem;

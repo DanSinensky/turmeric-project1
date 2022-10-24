@@ -2,17 +2,18 @@
 const baseURL = "https://deckofcardsapi.com/"
 
 const draw = (deckID) => {
-        const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
-        $.ajax(drawURL)
-        .then((data) => {
-            const drawn = data.cards
-            console.log(drawn)
-            },
-            (error) => {
-                console.log('bad request', error)
-            }
-        )
-    }         
+    const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
+    $.ajax(drawURL)
+    .then((data) => {
+        const drawn = data.cards
+        console.log(drawn)
+        },
+        (error) => {
+            console.log('bad request', error)
+        }
+    )
+}
+
 // function that creates game
 function newGame(){
     // constructing url for request
@@ -22,7 +23,6 @@ function newGame(){
     $.ajax(newGameURL)
     .then((data) => {
         console.log(data)
-        const $header = $("header")
         const $left = $(".left")
         const $main = $("main")
         const $footer = $("footer")
@@ -45,18 +45,8 @@ function newGame(){
         }
     )
 }
-
-newGame()
-
-const promise1 = new Promise((resolve, reject) => {
-    resolve('Success!');
-  });
   
-  promise1.then((value) => {
-    console.log(value);
-    // expected output: "Success!"
-  });
-
+newGame()
 
 // shuffle cards remaining in deck
 // function shuffle($deck_id){
@@ -64,4 +54,4 @@ const promise1 = new Promise((resolve, reject) => {
 // }
 
 const $button = document.querySelector("button")
-$($button).on("click", draw())
+$($button).on("click", draw(deckID))
