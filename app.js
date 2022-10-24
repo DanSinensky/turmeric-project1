@@ -54,4 +54,4 @@ newGame()
 // }
 
 const $button = document.querySelector("button")
-$($button).on("click", draw(deckID))
+$($button).on("click", draw())
