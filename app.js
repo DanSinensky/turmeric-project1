@@ -1,3 +1,6 @@
+let solidDeck
+let solidCards
+
 // variable for base url
 const baseURL = "https://deckofcardsapi.com/"
 
@@ -29,6 +32,7 @@ function newGame(){
     $.ajax(newGameURL)
     .then((data) => {
         console.log(data)
+        const $header = $("header")
         const $left = $(".left")
         const $main = $("main")
         const $footer = $("footer")
@@ -38,14 +42,14 @@ function newGame(){
         //deckID ARGUMENT IS SCOPED LOCALLY, PASSED INTO PARAMETER OUTSIDE OF AJAX CALL
         draw(deckID)
         const $cards_remaining = data.remaining
+        $header.html(
+            `<h1 class="header">Card Table Simulator</h1>
+            <h2>${deckID}</h2>
+            <h3>${$cards_remaining}</h3>`
+        )
         $left.html()
-        $main.html(
-            `<h2>${deckID}</h2>
-            <h3>${$cards_remaining}</h3>
-            <div class="board">
-                <div id="deck"></div>
-            <button>Draw</button>
-            </div>`)
+        // CALLS WITHOUT BEING CLICKED
+        $($deck).on("click", draw(deckID))
         },
         (error) => {
             console.log('bad request', error)
@@ -56,10 +60,11 @@ function newGame(){
 // RUN newGame()
 newGame()
 
-// BUTTON DOES NOT WORK (Uncaught ReferenceError: deckID is not defined)
-// CAN'T GET SCOPING OF deckID TO TRACK HERE
-const $button = document.querySelector("button")
-$($button).on("click", draw(deckID))
+// DECK CLICK DOES NOT WORK (Uncaught ReferenceError: deckID is not defined)
+//         CAN'T GET SCOPING OF deckID TO TRACK HERE
+        const $button = document.querySelector("button")
+        $($button).on("click", draw(deckID))
+
 
 // NOT USING THIS FUNCTION YET, JUST HAVE IT FOR REFERENCE
 // shuffle cards remaining in deck
