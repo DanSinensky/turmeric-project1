@@ -1,6 +1,8 @@
 // variable for base url
 const baseURL = "https://deckofcardsapi.com/"
 
+// CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
+// WITH deck_id PASSED INTO deckID PARAMETER
 function draw(deckID){
     const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
     $.ajax(drawURL)
@@ -20,6 +22,7 @@ function draw(deckID){
 // function that creates game
 function newGame(){
     // constructing url for request
+    // THIS URL CREATES DECK WITH NEW deck_id IN data
     const newGameURL = `${baseURL}api/deck/new/shuffle/?deck_count=1`
     
     // make AJAX request 
@@ -30,8 +33,9 @@ function newGame(){
         const $main = $("main")
         const $footer = $("footer")
         const $deck = $(".deck")
-
+        //CAPTURE data.deck_ID AS VARIABLE deckID INSIDE SCOPING
         const deckID = data.deck_id
+        //deckID ARGUMENT IS SCOPED LOCALLY, PASSED INTO PARAMETER OUTSIDE OF AJAX CALL
         draw(deckID)
         const $cards_remaining = data.remaining
         $left.html()
@@ -48,12 +52,16 @@ function newGame(){
         }
     )
 }
-  
+
+// RUN newGame()
 newGame()
 
+// BUTTON DOES NOT WORK (Uncaught ReferenceError: deckID is not defined)
+// CAN'T GET SCOPING OF deckID TO TRACK HERE
 const $button = document.querySelector("button")
 $($button).on("click", draw(deckID))
 
+// NOT USING THIS FUNCTION YET, JUST HAVE IT FOR REFERENCE
 // shuffle cards remaining in deck
 // function shuffle($deck_id){
 //     const shuffleURL = `${baseURL}api/deck/${deckID}/shuffle/?remaining=true`
