@@ -1,26 +1,17 @@
 let solidDeck
 let solidCards
+let deckID
+const drawnCards = []
+
+const $header = $("header")
+const $left = $(".left")
+const $main = $("main")
+const $footer = $("footer")
+const $deck = $(".deck")
+let $remaining
 
 // variable for base url
 const baseURL = "https://deckofcardsapi.com/"
-
-// CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
-// WITH deck_id PASSED INTO deckID PARAMETER
-function draw(deckID){
-    const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
-    $.ajax(drawURL)
-    .then((data) => {
-        const drawn = data.cards
-        console.log(drawn)
-        },
-        (error) => {
-            console.log('bad request', error)
-        }
-    )
-}
-
-
-
 
 // function that creates game
 function newGame(){
@@ -32,24 +23,17 @@ function newGame(){
     $.ajax(newGameURL)
     .then((data) => {
         console.log(data)
-        const $header = $("header")
-        const $left = $(".left")
-        const $main = $("main")
-        const $footer = $("footer")
-        const $deck = $(".deck")
         //CAPTURE data.deck_ID AS VARIABLE deckID INSIDE SCOPING
-        const deckID = data.deck_id
+        deckID = data.deck_id
         //deckID ARGUMENT IS SCOPED LOCALLY, PASSED INTO PARAMETER OUTSIDE OF AJAX CALL
-        draw(deckID)
-        const $cards_remaining = data.remaining
+        //draw(deckID)
+        const cards_remaining = data.remaining
         $header.html(
             `<h1 class="header">Card Table Simulator</h1>
             <h2>${deckID}</h2>
-            <h3>${$cards_remaining}</h3>`
+            <h3 class="cards_remaining">${cards_remaining}</h3>`
         )
         $left.html()
-        // CALLS WITHOUT BEING CLICKED
-        $($deck).on("click", draw(deckID))
         },
         (error) => {
             console.log('bad request', error)
@@ -60,10 +44,30 @@ function newGame(){
 // RUN newGame()
 newGame()
 
-// DECK CLICK DOES NOT WORK (Uncaught ReferenceError: deckID is not defined)
-//         CAN'T GET SCOPING OF deckID TO TRACK HERE
-        const $button = document.querySelector("button")
-        $($button).on("click", draw(deckID))
+// CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
+// WITH deck_id PASSED INTO deckID PARAMETER
+        $($deck).on("click", function(){
+            const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
+            $.ajax(drawURL)
+            .then((data) => {
+                //Saves drawnCard data in an object
+                const drawnCard = data.cards[0]
+                console.log(drawnCard)
+                //Pushes drawnCard object into a globally scoped arrayarray
+                drawnCards.push(drawnCard)
+                console.log('drawnCards',drawnCards)
+                //Same variable as in newGame, but different local scope
+                const cards_remaining = data.remaining
+                //Update h3 of cards_remaining
+                $remaining = $(".cards_remaining")
+                $remaining.html(cards_remaining)
+                console.log('cards_remaining',cards_remaining)
+                },
+                (error) => {
+                    console.log('bad request', error)
+                }
+            )
+        })
 
 
 // NOT USING THIS FUNCTION YET, JUST HAVE IT FOR REFERENCE
