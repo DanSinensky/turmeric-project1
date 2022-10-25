@@ -69,7 +69,6 @@ newGame()
             )
         })
 
-
 // NOT USING THIS FUNCTION YET, JUST HAVE IT FOR REFERENCE
 // shuffle cards remaining in deck
 // function shuffle($deck_id){
