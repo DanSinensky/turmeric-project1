@@ -1,7 +1,25 @@
-let solidDeck
-let solidCards
 let deckID
+let drawn = 0
 const drawnCards = []
+
+class Card {
+    constructor(code, image, value, suit, number){
+        this.code = code;
+        this.image = image;
+        this.value = value;
+        this.suit = suit
+        this.number = number;
+    }
+}
+
+// "code": "6H", 
+//             "image": "https://deckofcardsapi.com/static/img/6H.png", 
+//             "images": {
+//                           "svg": "https://deckofcardsapi.com/static/img/6H.svg", 
+//                           "png": "https://deckofcardsapi.com/static/img/6H.png"
+//                       }, 
+//             "value": "6", 
+//             "suit": "HEARTS"
 
 const $header = $("header")
 const $left = $(".left")
@@ -22,7 +40,7 @@ function newGame(){
     // make AJAX request 
     $.ajax(newGameURL)
     .then((data) => {
-        console.log(data)
+        console.log('newGame data',data)
         //CAPTURE data.deck_ID AS VARIABLE deckID INSIDE SCOPING
         deckID = data.deck_id
         //deckID ARGUMENT IS SCOPED LOCALLY, PASSED INTO PARAMETER OUTSIDE OF AJAX CALL
@@ -51,8 +69,9 @@ newGame()
             $.ajax(drawURL)
             .then((data) => {
                 //Saves drawnCard data in an object
-                const drawnCard = data.cards[0]
-                console.log(drawnCard)
+                const drawnCard = new Card(data.cards[0].code, data.cards[0].image,
+                    data.cards[0].value, data.cards[0].suit, drawnCards.length+1)
+                console.log('drawnCard',drawnCard)
                 //Pushes drawnCard object into a globally scoped arrayarray
                 drawnCards.push(drawnCard)
                 console.log('drawnCards',drawnCards)
