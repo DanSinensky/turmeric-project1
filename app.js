@@ -1,8 +1,7 @@
 let deckID
-let drawn = 0
 const drawnCards = []
 
-class Card {
+class CardObject {
     constructor(code, image, value, suit, number){
         this.code = code;
         this.image = image;
@@ -69,11 +68,12 @@ newGame()
             $.ajax(drawURL)
             .then((data) => {
                 //Saves drawnCard data in an object
-                const drawnCard = new Card(data.cards[0].code, data.cards[0].image,
-                    data.cards[0].value, data.cards[0].suit, drawnCards.length+1)
+                const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
+                    data.cards[0].value, data.cards[0].suit, drawnCards.length)
                 console.log('drawnCard',drawnCard)
                 //Pushes drawnCard object into a globally scoped arrayarray
                 drawnCards.push(drawnCard)
+                console.log('drawnCard',drawnCards[drawnCards.length-1])
                 console.log('drawnCards',drawnCards)
                 //Same variable as in newGame, but different local scope
                 const cards_remaining = data.remaining
@@ -81,6 +81,11 @@ newGame()
                 $remaining = $(".cards_remaining")
                 $remaining.html(cards_remaining)
                 console.log('cards_remaining',cards_remaining)
+
+                let $card = $("<img>").addClass(`${data.cards[0].code} card`)
+                $card.attr("src", data.cards[0].image)
+                $main.append($card)
+
                 },
                 (error) => {
                     console.log('bad request', error)
