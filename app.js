@@ -1,14 +1,14 @@
 let deckID
 const drawnCards = []
+const menuButtons = ["Flip", "To Player", "To Discard"]
 
 class CardObject {
-    constructor(code, image, value, suit, number, face_Up){
+    constructor(code, image, value, suit, number){
         this.code = code;
         this.image = image;
         this.value = value;
         this.suit = suit
         this.number = number;
-        this.face_Up = face_Up;
     }
 }
 
@@ -61,7 +61,7 @@ newGame()
             .then((data) => {
                 //Saves drawnCard data in an object
                 const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
-                    data.cards[0].value, data.cards[0].suit, drawnCards.length, true)
+                    data.cards[0].value, data.cards[0].suit, drawnCards.length)
                 console.log('drawnCard',drawnCard)
                 //Pushes drawnCard object into a globally scoped arrayarray
                 drawnCards.push(drawnCard)
@@ -74,11 +74,27 @@ newGame()
                 $remaining.html(cards_remaining)
                 console.log('cards_remaining',cards_remaining)
 
-                let $card = $("<img>").addClass("card")
-                $card.attr("id", data.cards[0].code)
+                const $card = $("<img>").addClass(`card ${data.cards[0].code}`)
                 $card.attr("src", data.cards[0].image)
                 $main.append($card)
-                $(`#${data.cards[0].code}`).on('click', function(){
+                
+
+                $($card).on('click', function(){
+                    $(this).toggleClass("menu")
+                    if ($(this).classlist) {
+                        
+                    }
+                    const $menu = $("<div>").addClass(`menu ${data.cards[0].code}`)
+                    for (let menuButton of menuButtons) {
+                        const button = document.createElement("a");
+                        button.textContent = menuButton;
+                        $menu.append(button);
+                      }
+                    $menu.insertAfter($card)
+                }
+            )
+
+                $($card).on('click', function(){
                     var src = ($(this).attr('src') === `${data.cards[0].image}`)
                         ? 'images/CardBack.jpg'
                         : `${data.cards[0].image}`;
