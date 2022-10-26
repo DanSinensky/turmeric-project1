@@ -2,23 +2,15 @@ let deckID
 const drawnCards = []
 
 class CardObject {
-    constructor(code, image, value, suit, number){
+    constructor(code, image, value, suit, number, face_Up){
         this.code = code;
         this.image = image;
         this.value = value;
         this.suit = suit
         this.number = number;
+        this.face_Up = face_Up;
     }
 }
-
-// "code": "6H", 
-//             "image": "https://deckofcardsapi.com/static/img/6H.png", 
-//             "images": {
-//                           "svg": "https://deckofcardsapi.com/static/img/6H.svg", 
-//                           "png": "https://deckofcardsapi.com/static/img/6H.png"
-//                       }, 
-//             "value": "6", 
-//             "suit": "HEARTS"
 
 const $header = $("header")
 const $left = $(".left")
@@ -69,7 +61,7 @@ newGame()
             .then((data) => {
                 //Saves drawnCard data in an object
                 const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
-                    data.cards[0].value, data.cards[0].suit, drawnCards.length)
+                    data.cards[0].value, data.cards[0].suit, drawnCards.length, true)
                 console.log('drawnCard',drawnCard)
                 //Pushes drawnCard object into a globally scoped arrayarray
                 drawnCards.push(drawnCard)
@@ -82,10 +74,17 @@ newGame()
                 $remaining.html(cards_remaining)
                 console.log('cards_remaining',cards_remaining)
 
-                let $card = $("<img>").addClass(`${data.cards[0].code} card`)
+                let $card = $("<img>").addClass("card")
+                $card.attr("id", data.cards[0].code)
                 $card.attr("src", data.cards[0].image)
                 $main.append($card)
-
+                $(`#${data.cards[0].code}`).on('click', function(){
+                    var src = ($(this).attr('src') === `${data.cards[0].image}`)
+                        ? 'images/CardBack.jpg'
+                        : `${data.cards[0].image}`;
+                    $(this).attr('src', src);
+                }
+            );
                 },
                 (error) => {
                     console.log('bad request', error)
