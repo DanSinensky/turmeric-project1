@@ -3,18 +3,20 @@ const drawnCards = []
 const menuButtons = ["Flip", "To Player", "To Discard"]
 
 class CardObject {
-    constructor(code, image, value, suit, number){
+    constructor(code, image, value, suit, number, facedown){
         this.code = code;
         this.image = image;
         this.value = value;
         this.suit = suit
-        this.number = number;
+        this.number = number
+        this.facedown = facedown;
     }
 }
 
 const $header = $("header")
 const $left = $(".left")
 const $main = $("main")
+const $board = $(".board")
 const $footer = $("footer")
 const $deck = $(".deck")
 let $remaining
@@ -61,7 +63,7 @@ newGame()
             .then((data) => {
                 //Saves drawnCard data in an object
                 const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
-                    data.cards[0].value, data.cards[0].suit, drawnCards.length)
+                    data.cards[0].value, data.cards[0].suit, drawnCards.length, false)
                 console.log('drawnCard',drawnCard)
                 //Pushes drawnCard object into a globally scoped arrayarray
                 drawnCards.push(drawnCard)
@@ -74,26 +76,33 @@ newGame()
                 $remaining.html(cards_remaining)
                 console.log('cards_remaining',cards_remaining)
 
-                const $card = $("<img>").addClass(`card ${data.cards[0].code}`)
+                const $card = $("<img>").addClass(`card`)
+                $card.attr("id", data.cards[0].code)
                 $card.attr("src", data.cards[0].image)
-                $main.append($card)
-                
-
-                $($card).on('click', function(){
-                    $(this).toggleClass("menu")
-                    if ($(this).classlist) {
-                        
+                $board.append($card)
+                if ($card.attr("class") === "card"){
+                    $($card).on('click', function(){
+                        $(".button").remove()
+                        //$(this).toggleClass("menu")
+                        const $menu = $("<ul>").addClass("button menu")
+                        $menu.attr("id", `${data.cards[0].code} menu`)
+                        for (let menuButton of menuButtons) {
+                            const button = document.createElement("li");
+                            button.textContent = menuButton;
+                            $menu.append(button);
+                          }
+                        $menu.insertAfter($card)
                     }
-                    const $menu = $("<div>").addClass(`menu ${data.cards[0].code}`)
-                    for (let menuButton of menuButtons) {
-                        const button = document.createElement("a");
-                        button.textContent = menuButton;
-                        $menu.append(button);
-                      }
-                    $menu.insertAfter($card)
+                )
+                }
+                
+                $($card).on('click', function(){
+                    var classes = ($(this).attr('class') === "card")
+                        ? "card menu"
+                        : "card";
+                    $(this).attr('class', classes);
                 }
             )
-
                 $($card).on('click', function(){
                     var src = ($(this).attr('src') === `${data.cards[0].image}`)
                         ? 'images/CardBack.jpg'
