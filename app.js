@@ -46,7 +46,23 @@ function newGame(){
             <h2>${deckID}</h2>
             <h3 class="cards_remaining">${cards_remaining}</h3>`
         )
-        $left.html()
+        $left.html(
+            `<form class="playerCountChooser">
+            <label for="numberOfPlayers">How many people are playing?</label>
+
+            <select name="numberOfPlayers" id="numberOfPlayers">
+              <option value="one">One</option>
+              <option value="two">Two</option>
+              <option value="three">Three</option>
+              <option value="four">Four</option>
+              <option value="five">Five</option>
+              <option value="six">Six</option>
+              <option value="seven">Seven</option>
+              <option value="eight">Eight</option>
+            </select>
+            <input type="submit" value="Choose">
+            </form`
+        )
         },
         (error) => {
             console.log('bad request', error)
