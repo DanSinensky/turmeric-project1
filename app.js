@@ -1,6 +1,7 @@
 let deckID
 const drawnCards = []
 const menuButtons = ["Flip", "To Player", "To Discard"]
+const playerHands = []
 
 class CardObject {
     constructor(code, image, value, suit, number, facedown){
@@ -82,37 +83,37 @@ newGame()
                 $card.attr("src", data.cards[0].image)
                 $board.append($card)
 
-                    $($card).on('click', function(){
-                        
-                    }
-                )
                 
                 $($card).on('click', function(){
                     var classes = ($(this).attr('class') === "card")
                         ? "card menu"
                         : "card";
                     $(this).attr('class', classes);
-                }
-            )
-                $($card).on('click', function(){
-                    var src = ($(this).attr('src') === `${data.cards[0].image}`)
-                        ? 'images/CardBack.jpg'
-                        : `${data.cards[0].image}`;
-                    $(this).attr('src', src);
-                    if ($(this).attr('class') === "menu") {
-                        $(".button").remove()
-                        } else {
-                            $(".button").remove()
+                    
+                        
                         //$(this).toggleClass("menu")
                         const $menu = $("<ul>").addClass("button menu")
                         $menu.attr("id", `${data.cards[0].code} menu`)
                         for (let menuButton of menuButtons) {
-                            const button = document.createElement("li");
-                            button.textContent = menuButton;
-                            $menu.append(button);
+                            const $button = $("<li>").addClass("button")
+                            $button.text(menuButton)
+                            $menu.append($button);
+
+                            $button.on("click", function(event){
+                                if ($button.text("Flip")){
+                                    var src = ($card.attr('src') === `${data.cards[0].image}`)
+                                        ? 'images/CardBack.jpg'
+                                        : `${data.cards[0].image}`;
+                                    $card.attr('src', src);
+                                }
+                                // if ($button.text("To Player")){
+                                    
+                                // }
+                                $(".button").remove()
+                            })
                           }
                         $menu.insertAfter($card)
-                        }
+                        
                 }
             );
                 },
