@@ -15,6 +15,13 @@ class CardObject {
     }
 }
 
+class playerHand {
+    constructor(number, name){
+        this.number = number;
+        this.name = name;
+    }
+}
+
 const $header = $("header")
 const $left = $(".left")
 const $players = $(".players")
@@ -48,9 +55,6 @@ function newGame(){
             <h2>${deckID}</h2>
             <h3 class="cards_remaining">${cards_remaining}</h3>`
         )
-        $left.html(
-            
-        )
         },
         (error) => {
             console.log('bad request', error)
@@ -64,7 +68,20 @@ newGame()
 $($players).on("submit", function(event){
     event.preventDefault()
     playerCount = playerCounter.selectedIndex
-    console.log(playerCount)
+    for (let i = 1; i < playerCount+1; i += 1){
+        const player = new playerHand(i, `Player ${i}`)
+        playerHands.push(player)
+    }
+    $left.html(
+        `<form class="card-back">
+        <input type="text" placeholder="Paste link here"></br>
+        <input type="submit" value="Save">
+    </form>
+    <form class="save-game">
+        <input type="text" placeholder="Name game"></br>
+        <input type="submit" value="Save">
+    </form>`    
+    )
 })
 
 // CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
@@ -102,27 +119,33 @@ $($players).on("submit", function(event){
                     
                         
                         //$(this).toggleClass("menu")
-                        const $menu = $("<ul>").addClass("button menu")
-                        $menu.attr("id", `${data.cards[0].code} menu`)
+                        const $cardmenu = $("<ul>").addClass("button card menu")
+                        $cardmenu.attr("id", `${data.cards[0].code} button card menu`)
                         for (let menuButton of menuButtons) {
                             const $button = $("<li>").addClass("button")
                             $button.text(menuButton)
-                            $menu.append($button);
+                            $cardmenu.append($button);
 
-                            $button.on("click", function(event){
+                            $button.on("click", function(){
                                 if ($button.text("Flip")){
                                     var src = ($card.attr('src') === `${data.cards[0].image}`)
                                         ? 'images/CardBack.jpg'
                                         : `${data.cards[0].image}`;
                                     $card.attr('src', src);
+                                } else if ($button.text("To Player")){
+                                    const $playermenu = $("<ul>").addClass("button card player menu")
+                                    $playermenu.attr("id", `${data.cards[0].code} button card player menu`)
+                                    for (let i = 1; i < playerCount+1; i += 1){
+                                        const $button = $("<li>").addClass("button card player count menu")
+                                        $button.text(`Player ${i}`)
+                                        $playermenu.append($button);
+                                    }
+
                                 }
-                                // if ($button.text("To Player")){
-                                    
-                                // }
                                 $(".button").remove()
                             })
                           }
-                        $menu.insertAfter($card)
+                        $cardmenu.insertAfter($card)
                         
                 }
             );
