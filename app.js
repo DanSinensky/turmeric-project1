@@ -83,20 +83,7 @@ newGame()
                 $board.append($card)
 
                     $($card).on('click', function(){
-                        if ($(this).attr('class') === "menu") {
-                            $menu.remove()
-                        } else {
-                            $(".button").remove()
-                        //$(this).toggleClass("menu")
-                        const $menu = $("<ul>").addClass("button menu")
-                        $menu.attr("id", `${data.cards[0].code} menu`)
-                        for (let menuButton of menuButtons) {
-                            const button = document.createElement("li");
-                            button.textContent = menuButton;
-                            $menu.append(button);
-                          }
-                        $menu.insertAfter($card)
-                        }
+                        
                     }
                 )
                 
@@ -112,6 +99,20 @@ newGame()
                         ? 'images/CardBack.jpg'
                         : `${data.cards[0].image}`;
                     $(this).attr('src', src);
+                    if ($(this).attr('class') === "menu") {
+                        $(".button").remove()
+                        } else {
+                            $(".button").remove()
+                        //$(this).toggleClass("menu")
+                        const $menu = $("<ul>").addClass("button menu")
+                        $menu.attr("id", `${data.cards[0].code} menu`)
+                        for (let menuButton of menuButtons) {
+                            const button = document.createElement("li");
+                            button.textContent = menuButton;
+                            $menu.append(button);
+                          }
+                        $menu.insertAfter($card)
+                        }
                 }
             );
                 },
