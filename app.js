@@ -1,4 +1,5 @@
 let deckID
+let playerCount
 const drawnCards = []
 const menuButtons = ["Flip", "To Player", "To Discard"]
 const playerHands = []
@@ -16,6 +17,7 @@ class CardObject {
 
 const $header = $("header")
 const $left = $(".left")
+const $players = $(".players")
 const $main = $("main")
 const $board = $(".board")
 const $footer = $("footer")
@@ -47,21 +49,7 @@ function newGame(){
             <h3 class="cards_remaining">${cards_remaining}</h3>`
         )
         $left.html(
-            `<form class="playerCountChooser">
-            <label for="numberOfPlayers">How many people are playing?</label>
-
-            <select name="numberOfPlayers" id="numberOfPlayers">
-              <option value="one">One</option>
-              <option value="two">Two</option>
-              <option value="three">Three</option>
-              <option value="four">Four</option>
-              <option value="five">Five</option>
-              <option value="six">Six</option>
-              <option value="seven">Seven</option>
-              <option value="eight">Eight</option>
-            </select>
-            <input type="submit" value="Choose">
-            </form`
+            
         )
         },
         (error) => {
@@ -72,6 +60,12 @@ function newGame(){
 
 // RUN newGame()
 newGame()
+
+$($players).on("submit", function(event){
+    event.preventDefault()
+    playerCount = playerCounter.selectedIndex
+    console.log(playerCount)
+})
 
 // CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
 // WITH deck_id PASSED INTO deckID PARAMETER
