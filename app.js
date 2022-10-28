@@ -19,6 +19,7 @@ const $main = $("main")
 const $board = $(".board")
 const $footer = $("footer")
 const $deck = $(".deck")
+const $menu = $(".button")
 let $remaining
 
 // variable for base url
@@ -80,9 +81,12 @@ newGame()
                 $card.attr("id", data.cards[0].code)
                 $card.attr("src", data.cards[0].image)
                 $board.append($card)
-                if ($card.attr("class") === "card"){
+
                     $($card).on('click', function(){
-                        $(".button").remove()
+                        if ($(this).attr('class') === "menu") {
+                            $menu.remove()
+                        } else {
+                            $(".button").remove()
                         //$(this).toggleClass("menu")
                         const $menu = $("<ul>").addClass("button menu")
                         $menu.attr("id", `${data.cards[0].code} menu`)
@@ -92,9 +96,9 @@ newGame()
                             $menu.append(button);
                           }
                         $menu.insertAfter($card)
+                        }
                     }
                 )
-                }
                 
                 $($card).on('click', function(){
                     var classes = ($(this).attr('class') === "card")
