@@ -137,6 +137,7 @@ $($players).on("submit", function(event){
                                         ? 'images/CardBack.jpg'
                                         : `${data.cards[0].image}`;
                                     $card.attr('src', src);
+                                    $(".button").remove()
                                 } else if (event.target.innerText === "To Player"){
                                     console.log("To Player")
                                     const $playermenu = $("<ul>").addClass("button card player menu")
@@ -145,9 +146,10 @@ $($players).on("submit", function(event){
                                         const $button = $("<li>").addClass("button card player count menu")
                                         $button.text(`Player ${i}`)
                                         $playermenu.append($button);
+                                        console.log($playermenu)
                                     }
                                 }
-                                $(".button").remove()
+                                
                             })
                           }
                         $cardmenu.insertAfter($card)
