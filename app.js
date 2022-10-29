@@ -72,6 +72,7 @@ $($players).on("submit", function(event){
         const player = new playerHand(i, `Player ${i}`)
         playerHands.push(player)
     }
+    console.log(playerHands)
     $left.html(
         `<form class="card-back">
         <input type="text" placeholder="Paste link here"></br>
@@ -111,44 +112,50 @@ $($players).on("submit", function(event){
                 $board.append($card)
 
                 
+                const $cardmenu = $("<ul>").addClass("button card menu")
                 $($card).on('click', function(){
+                    console.log($cardmenu)
+                    //$(this).toggleClass("menu")
                     var classes = ($(this).attr('class') === "card")
                         ? "card menu"
                         : "card";
                     $(this).attr('class', classes);
-                    
-                        
-                        //$(this).toggleClass("menu")
-                        const $cardmenu = $("<ul>").addClass("button card menu")
+
                         $cardmenu.attr("id", `${data.cards[0].code} button card menu`)
                         for (let menuButton of menuButtons) {
                             const $button = $("<li>").addClass("button")
+                            $button.attr('id', `${menuButton}`)
                             $button.text(menuButton)
+                            console.log($button)
                             $cardmenu.append($button);
-
-                            $button.on("click", function(){
-                                if ($button.text("Flip")){
-                                    var src = ($card.attr('src') === `${data.cards[0].image}`)
-                                        ? 'images/CardBack.jpg'
-                                        : `${data.cards[0].image}`;
-                                    $card.attr('src', src);
-                                } else if ($button.text("To Player")){
-                                    const $playermenu = $("<ul>").addClass("button card player menu")
-                                    $playermenu.attr("id", `${data.cards[0].code} button card player menu`)
-                                    for (let i = 1; i < playerCount+1; i += 1){
-                                        const $button = $("<li>").addClass("button card player count menu")
-                                        $button.text(`Player ${i}`)
-                                        $playermenu.append($button);
-                                    }
-
+                        }
+                        $button.on("click", function(event){
+                            // console.log(event)
+                            if (event.target.innerText === "Flip"){
+                                console.log("Flip")
+                                var src = ($card.attr('src') === `${data.cards[0].image}`)
+                                ? 'images/CardBack.jpg'
+                                : `${data.cards[0].image}`;
+                                $card.attr('src', src);
+                            } else if (event.target.innerText === "To Player"){
+                                console.log("To Player")
+                                const $playermenu = $("<ul>").addClass("button card player menu")
+                                $playermenu.attr("id", `${data.cards[0].code} button card player menu`)
+                                for (let i = 1; i < playerCount+1; i += 1){
+                                    const $button = $("<li>").addClass("button card player count menu")
+                                    $button.text(`Player ${i}`)
+                                    $playermenu.append($button);
                                 }
-                                $(".button").remove()
-                            })
-                          }
+                                
+                            }
+                            $(".button").remove()
+                        })
+                    }
+                    );
+                          
                         $cardmenu.insertAfter($card)
                         
-                }
-            );
+            
                 },
                 (error) => {
                     console.log('bad request', error)
