@@ -1,3 +1,4 @@
+//Globally scoped (deckID very important sticking point!)
 let deckID
 let playerCount
 const drawnCards = []
@@ -71,23 +72,32 @@ function newGame(){
 // RUN newGame()
 newGame()
 
+//Event listener on form submit
 $($players).on("submit", function(event){
+    //Empty board, clear conditions
     $board.empty()
     winner = ""
     event.preventDefault()
+    //Get info from dropdown
     playerCount = playerCounter.selectedIndex
     menuButtons.splice(1,1)
     drawButtons.splice(1,1)
+    //Create hands in loop
     for (let i = 1; i < playerCount+1; i += 1){
         const player = new playerHand(i, `Player ${i}`, `To Player ${i} Hand`)
+        //Use saved deckID for new call
         const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
             $.ajax(drawURL)
             .then((data) => {
+                //Refresh deck if out of cards. Doesn't quite work
                 if (playerCount > data.remaining){
+                    $.ajax(`${baseURL}api/deck/${deckID}/draw/?count=${playerCount-data.remaining}`)
                     newGame()
                 }
+                //Create each card
                 const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
                     data.cards[0].value, data.cards[0].suit, drawnCards.length, false)
+                    //Convert word string values to number strings
                     if (data.cards[0].value === "ACE"){
                         drawnCard.value = "14"
                     } else if (data.cards[0].value === "KING"){
@@ -97,8 +107,10 @@ $($players).on("submit", function(event){
                     } else if (data.cards[0].value === "JACK"){
                         drawnCard.value = "11"
                     }
+                    //Convert all number strings into number variables
                     drawnCard.value = parseInt(drawnCard.value)
                     player.card = drawnCard
+                    //Conditional to determine winner 
                     if (winner === "") {
                         winner = player.name
                         value = drawnCard.value
@@ -118,6 +130,7 @@ $($players).on("submit", function(event){
                     //Update h3 of cards_remaining
                     $remaining = $(".cards_remaining")
                     $remaining.html(cards_remaining)
+                    //Create cards in board
                     const $hand = $("<div>").addClass("hand")
                     $hand.append(`<p>${player.name}</p>`)
                     $( ".board" ).append($hand)
@@ -125,9 +138,11 @@ $($players).on("submit", function(event){
                     $card.attr("id", i)
                     $card.attr("src", data.cards[0].image)
                     $hand.append($card)
+                    //Update winner
                     $winner.html(
                         `<p class="players winner">${winner}</p>`    
                     )
+                    //Flip card
                     $($card).on('click', function(){
                         var src = ($card.attr('src') === `${data.cards[0].image}`)
                                         ? 'images/CardBack.jpg'
