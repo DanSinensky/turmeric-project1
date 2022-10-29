@@ -16,9 +16,10 @@ class CardObject {
 }
 
 class playerHand {
-    constructor(number, name){
+    constructor(number, name, button){
         this.number = number;
         this.name = name;
+        this.button = button;
     }
 }
 
@@ -70,9 +71,9 @@ $($players).on("submit", function(event){
     playerCount = playerCounter.selectedIndex
     menuButtons.splice(1,1)
     for (let i = 1; i < playerCount+1; i += 1){
-        const player = new playerHand(i, `Player ${i}`)
+        const player = new playerHand(i, `Player ${i}`, `To Player ${i} Hand`)
         playerHands.push(player)
-        menuButtons.splice(i,0,`To Player ${i} Hand`)
+        menuButtons.splice(i,0,player.button)
     }
     console.log(playerHands)
     $left.html(
@@ -130,7 +131,6 @@ $($players).on("submit", function(event){
                             $button.text(menuButton)
                             console.log($button)
                             $cardmenu.append($button);
-
                             $button.on("click", function(event){
                                 // console.log(event)
                                 if (event.target.innerText === "Flip"){
@@ -140,16 +140,10 @@ $($players).on("submit", function(event){
                                         : `${data.cards[0].image}`;
                                     $card.attr('src', src);
                                     $(".button").remove()
-                                } else if (event.target.innerText === "To Player"){
+                                } else if (event.target.innerText.charAt(0) === "T"){
                                     console.log("To Player")
-                                    const $playermenu = $("<ul>").addClass("button card player menu")
-                                    $playermenu.attr("id", `${data.cards[0].code} button card player menu`)
-                                    for (let i = 1; i < playerCount+1; i += 1){
-                                        const $button = $("<li>").addClass("button card player count menu")
-                                        $button.text(`Player ${i}`)
-                                        $playermenu.append($button);
-                                        console.log($playermenu)
-                                    }
+                                    $(".button").remove()
+                                    $(".card").remove()
                                 }
                                 
                             })
