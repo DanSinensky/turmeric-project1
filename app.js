@@ -83,6 +83,9 @@ $($players).on("submit", function(event){
         const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
             $.ajax(drawURL)
             .then((data) => {
+                if (playerCount > data.remaining){
+                    newGame()
+                }
                 const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
                     data.cards[0].value, data.cards[0].suit, drawnCards.length, false)
                     if (data.cards[0].value === "ACE"){
