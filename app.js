@@ -3,6 +3,8 @@ let playerCount
 const drawnCards = []
 const menuButtons = ["Flip", "Select number of players", "Discard"]
 const playerHands = []
+const drawButtons = ["To Board", "Select number of players"]
+const values = []
 
 class CardObject {
     constructor(code, image, value, suit, number, facedown){
@@ -20,6 +22,7 @@ class playerHand {
         this.number = number;
         this.name = name;
         this.button = button;
+        this.card;
     }
 }
 
@@ -31,6 +34,7 @@ const $board = $(".board")
 const $footer = $("footer")
 const $deck = $(".deck")
 const $menu = $(".button")
+const $winner = $(".winner")
 let $remaining
 
 // variable for base url
@@ -52,7 +56,7 @@ function newGame(){
         //draw(deckID)
         const cards_remaining = data.remaining
         $header.html(
-            `<h1 class="header">Card Table Simulator</h1>
+            `<h1 class="header">High Card</h1>
             <h2>${deckID}</h2>
             <h3 class="cards_remaining">${cards_remaining}</h3>`
         )
@@ -70,27 +74,76 @@ $($players).on("submit", function(event){
     event.preventDefault()
     playerCount = playerCounter.selectedIndex
     menuButtons.splice(1,1)
+    drawButtons.splice(1,1)
     for (let i = 1; i < playerCount+1; i += 1){
         const player = new playerHand(i, `Player ${i}`, `To Player ${i} Hand`)
-        playerHands.push(player)
-        menuButtons.splice(i,0,player.button)
+        const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
+            $.ajax(drawURL)
+            .then((data) => {
+                const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
+                    data.cards[0].value, data.cards[0].suit, drawnCards.length, false)
+                    if (data.cards[0].value === "ACE"){
+                        drawnCard.value = "14"
+                    } else if (data.cards[0].value === "KING"){
+                        drawnCard.value = "13"
+                    } else if (data.cards[0].value === "QUEEN"){
+                        drawnCard.value = "12"
+                    } else if (data.cards[0].value === "JACK"){
+                        drawnCard.value = "11"
+                    }
+                    drawnCard.value = parseInt(drawnCard.value)
+                    player.card = drawnCard
+                    // console.log(player.card)
+                    playerHands.push(player)
+                    menuButtons.splice(i,0,player.button)
+                    drawButtons.splice(i,0,player.button)
+                    //Same variable as in newGame, but different local scope
+                    const cards_remaining = data.remaining
+                    //Update h3 of cards_remaining
+                    $remaining = $(".cards_remaining")
+                    $remaining.html(cards_remaining)
+                    const $hand = $("<div>").addClass("hand")
+                    $hand.append(`<p>${player.name}</p>`)
+                    $( ".board" ).append($hand)
+                    const $card = $("<img>").addClass(`card`)
+                    $card.attr("id", i)
+                    $card.attr("src", data.cards[0].image)
+                    $hand.append($card)
+            })
     }
-    console.log(playerHands)
-    $left.html(
-        `<form class="card-back">
-        <input type="text" placeholder="Paste link here"></br>
-        <input type="submit" value="Save">
-    </form>
-    <form class="save-game">
-        <input type="text" placeholder="Name game"></br>
-        <input type="submit" value="Save">
-    </form>`    
-    )
+    let p1 = $("#1")
+    // console.log(playerHands)
+    console.log(p1)
+    // $left.html(
+    //     `<form class="card-back">
+    //     <input type="text" placeholder="Paste link here"></br>
+    //     <input type="submit" value="Save">
+    // </form>
+    // <form class="save-game">
+    //     <input type="text" placeholder="Name game"></br>
+    //     <input type="submit" value="Save">
+    // </form>`    
+    // )
 })
 
 // CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
 // WITH deck_id PASSED INTO deckID PARAMETER
-        $($deck).on("click", function(){
+$($deck).on("click", function(){
+    const $drawmenu = $("<ul>").addClass("button menu")
+    for (let drawButton of drawButtons){
+        const $button = $("<li>").addClass("button")
+        $button.attr('id', `${drawButton}`)
+        $button.text(drawButton)
+        console.log($button)
+        $drawmenu.append($button);
+            
+
+            $button.on("click", function(event){
+                if (event.target.innerText === "To Board"){
+
+                }
+            })
+        }
             const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
             $.ajax(drawURL)
             .then((data) => {
@@ -143,7 +196,7 @@ $($players).on("submit", function(event){
                                 } else if (event.target.innerText.charAt(0) === "T"){
                                     console.log("To Player")
                                     $(".button").remove()
-                                    $(".card").remove()
+                                    $card.remove()
                                 }
                                 
                             })
@@ -158,8 +211,3 @@ $($players).on("submit", function(event){
             )
         })
 
-// NOT USING THIS FUNCTION YET, JUST HAVE IT FOR REFERENCE
-// shuffle cards remaining in deck
-// function shuffle($deck_id){
-//     const shuffleURL = `${baseURL}api/deck/${deckID}/shuffle/?remaining=true`
-// }
