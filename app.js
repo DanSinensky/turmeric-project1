@@ -73,6 +73,7 @@ newGame()
 
 $($players).on("submit", function(event){
     $board.empty()
+    winner = ""
     event.preventDefault()
     playerCount = playerCounter.selectedIndex
     menuButtons.splice(1,1)
@@ -124,6 +125,12 @@ $($players).on("submit", function(event){
                     $winner.html(
                         `<p class="players winner">${winner}</p>`    
                     )
+                    $($card).on('click', function(){
+                        var src = ($card.attr('src') === `${data.cards[0].image}`)
+                                        ? 'images/CardBack.jpg'
+                                        : `${data.cards[0].image}`;
+                                    $card.attr('src', src);
+                    })
             })
     }
     // console.log(playerHands)
@@ -132,86 +139,86 @@ $($players).on("submit", function(event){
 
 // CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
 // WITH deck_id PASSED INTO deckID PARAMETER
-$($deck).on("click", function(){
-    const $drawmenu = $("<ul>").addClass("button menu")
-    for (let drawButton of drawButtons){
-        const $button = $("<li>").addClass("button")
-        $button.attr('id', `${drawButton}`)
-        $button.text(drawButton)
-        console.log($button)
-        $drawmenu.append($button);
+// $($deck).on("click", function(){
+//     const $drawmenu = $("<ul>").addClass("button menu")
+//     for (let drawButton of drawButtons){
+//         const $button = $("<li>").addClass("button")
+//         $button.attr('id', `${drawButton}`)
+//         $button.text(drawButton)
+//         console.log($button)
+//         $drawmenu.append($button);
             
 
-            $button.on("click", function(event){
-                if (event.target.innerText === "To Board"){
+//             $button.on("click", function(event){
+//                 if (event.target.innerText === "To Board"){
 
-                }
-            })
-        }
-            const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
-            $.ajax(drawURL)
-            .then((data) => {
-                //Saves drawnCard data in an object
-                const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
-                    data.cards[0].value, data.cards[0].suit, drawnCards.length, false)
-                console.log('drawnCard',drawnCard)
-                //Pushes drawnCard object into a globally scoped arrayarray
-                drawnCards.push(drawnCard)
-                console.log('drawnCard',drawnCards[drawnCards.length-1])
-                console.log('drawnCards',drawnCards)
-                //Same variable as in newGame, but different local scope
-                const cards_remaining = data.remaining
-                //Update h3 of cards_remaining
-                $remaining = $(".cards_remaining")
-                $remaining.html(cards_remaining)
-                console.log('cards_remaining',cards_remaining)
+//                 }
+//             })
+//         }
+//             const drawURL = `${baseURL}api/deck/${deckID}/draw/?count=1`
+//             $.ajax(drawURL)
+//             .then((data) => {
+//                 //Saves drawnCard data in an object
+//                 const drawnCard = new CardObject(data.cards[0].code, data.cards[0].image,
+//                     data.cards[0].value, data.cards[0].suit, drawnCards.length, false)
+//                 console.log('drawnCard',drawnCard)
+//                 //Pushes drawnCard object into a globally scoped arrayarray
+//                 drawnCards.push(drawnCard)
+//                 console.log('drawnCard',drawnCards[drawnCards.length-1])
+//                 console.log('drawnCards',drawnCards)
+//                 //Same variable as in newGame, but different local scope
+//                 const cards_remaining = data.remaining
+//                 //Update h3 of cards_remaining
+//                 $remaining = $(".cards_remaining")
+//                 $remaining.html(cards_remaining)
+//                 console.log('cards_remaining',cards_remaining)
 
-                const $card = $("<img>").addClass(`card`)
-                $card.attr("id", data.cards[0].code)
-                $card.attr("src", data.cards[0].image)
-                $board.append($card)
+//                 const $card = $("<img>").addClass(`card`)
+//                 $card.attr("id", data.cards[0].code)
+//                 $card.attr("src", data.cards[0].image)
+//                 $board.append($card)
 
                 
-                const $cardmenu = $("<ul>").addClass("button menu")
-                $($card).on('click', function(){
-                    $(".button").remove()
-                    //$(this).toggleClass("menu")
-                    var classes = ($(this).attr('class') === "card")
-                        ? "card menu"
-                        : "card";
-                    $(this).attr('class', classes);
+//                 const $cardmenu = $("<ul>").addClass("button menu")
+//                 $($card).on('click', function(){
+//                     $(".button").remove()
+//                     //$(this).toggleClass("menu")
+//                     var classes = ($(this).attr('class') === "card")
+//                         ? "card menu"
+//                         : "card";
+//                     $(this).attr('class', classes);
 
-                        $cardmenu.attr("id", `${data.cards[0].code} button menu`)
-                        for (let menuButton of menuButtons) {
-                            const $button = $("<li>").addClass("button")
-                            $button.attr('id', `${menuButton}`)
-                            $button.text(menuButton)
-                            console.log($button)
-                            $cardmenu.append($button);
-                            $button.on("click", function(event){
-                                // console.log(event)
-                                if (event.target.innerText === "Flip"){
-                                    console.log("Flip")
-                                    var src = ($card.attr('src') === `${data.cards[0].image}`)
-                                        ? 'images/CardBack.jpg'
-                                        : `${data.cards[0].image}`;
-                                    $card.attr('src', src);
-                                    $(".button").remove()
-                                } else if (event.target.innerText.charAt(0) === "T"){
-                                    console.log("To Player")
-                                    $(".button").remove()
-                                    $card.remove()
-                                }
+//                         $cardmenu.attr("id", `${data.cards[0].code} button menu`)
+//                         for (let menuButton of menuButtons) {
+//                             const $button = $("<li>").addClass("button")
+//                             $button.attr('id', `${menuButton}`)
+//                             $button.text(menuButton)
+//                             console.log($button)
+//                             $cardmenu.append($button);
+//                             $button.on("click", function(event){
+//                                 // console.log(event)
+//                                 if (event.target.innerText === "Flip"){
+//                                     console.log("Flip")
+//                                     var src = ($card.attr('src') === `${data.cards[0].image}`)
+//                                         ? 'images/CardBack.jpg'
+//                                         : `${data.cards[0].image}`;
+//                                     $card.attr('src', src);
+//                                     $(".button").remove()
+//                                 } else if (event.target.innerText.charAt(0) === "T"){
+//                                     console.log("To Player")
+//                                     $(".button").remove()
+//                                     $card.remove()
+//                                 }
                                 
-                            })
-                          }
-                        $cardmenu.insertAfter($card)
-                }
-            );
-                },
-                (error) => {
-                    console.log('bad request', error)
-                }
-            )
-        })
+//                             })
+//                           }
+//                         $cardmenu.insertAfter($card)
+//                 }
+//             );
+//                 },
+//                 (error) => {
+//                     console.log('bad request', error)
+//                 }
+//             )
+//         })
 
