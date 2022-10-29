@@ -1,7 +1,7 @@
 let deckID
 let playerCount
 const drawnCards = []
-const menuButtons = ["Flip", "To Player", "To Discard"]
+const menuButtons = ["Flip", "Select number of players", "Discard"]
 const playerHands = []
 
 class CardObject {
@@ -68,9 +68,11 @@ newGame()
 $($players).on("submit", function(event){
     event.preventDefault()
     playerCount = playerCounter.selectedIndex
+    menuButtons.splice(1,1)
     for (let i = 1; i < playerCount+1; i += 1){
         const player = new playerHand(i, `Player ${i}`)
         playerHands.push(player)
+        menuButtons.splice(i,0,`To Player ${i} Hand`)
     }
     console.log(playerHands)
     $left.html(
@@ -112,7 +114,7 @@ $($players).on("submit", function(event){
                 $board.append($card)
 
                 
-                const $cardmenu = $("<ul>").addClass("button card menu")
+                const $cardmenu = $("<ul>").addClass("button menu")
                 $($card).on('click', function(){
                     $(".button").remove()
                     //$(this).toggleClass("menu")
@@ -121,7 +123,7 @@ $($players).on("submit", function(event){
                         : "card";
                     $(this).attr('class', classes);
 
-                        $cardmenu.attr("id", `${data.cards[0].code} button card menu`)
+                        $cardmenu.attr("id", `${data.cards[0].code} button menu`)
                         for (let menuButton of menuButtons) {
                             const $button = $("<li>").addClass("button")
                             $button.attr('id', `${menuButton}`)
