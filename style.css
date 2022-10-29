@@ -63,4 +63,8 @@
   .hand p{
     font-size: small;
   }
+
+  .hand {
+    margin: 2px;
+  }
 }
