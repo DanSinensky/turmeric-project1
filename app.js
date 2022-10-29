@@ -120,12 +120,13 @@ $($players).on("submit", function(event){
                     $card.attr("id", i)
                     $card.attr("src", data.cards[0].image)
                     $hand.append($card)
+                    $winner.html(
+                        `<p class="players winner">${winner}</p>`    
+                    )
             })
     }
     // console.log(playerHands)
-    $winner.html(
-        `<p class="players winner">${winner}</p>`    
-    )
+    
 })
 
 // CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
