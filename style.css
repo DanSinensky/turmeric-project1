@@ -37,6 +37,13 @@
     border: solid 1px black;
   }
 
+  .board {
+    display: flex
+  }
+  .hand {
+    display: inline
+  }
+
   h1, h2, h3, p {
     font-size: 1rem;
   }

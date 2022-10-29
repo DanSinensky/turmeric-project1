@@ -72,6 +72,7 @@ function newGame(){
 newGame()
 
 $($players).on("submit", function(event){
+    $board.empty()
     event.preventDefault()
     playerCount = playerCounter.selectedIndex
     menuButtons.splice(1,1)
