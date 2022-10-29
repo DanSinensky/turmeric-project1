@@ -142,7 +142,7 @@ $($players).on("submit", function(event){
                     $winner.html(
                         `<p class="players winner">${winner}</p>`    
                     )
-                    //Flip card
+                    //Flip card. Learned from stackOverflow
                     $($card).on('click', function(){
                         var src = ($card.attr('src') === `${data.cards[0].image}`)
                                         ? 'images/CardBack.jpg'
