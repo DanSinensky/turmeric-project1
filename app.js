@@ -4,7 +4,8 @@ const drawnCards = []
 const menuButtons = ["Flip", "Select number of players", "Discard"]
 const playerHands = []
 const drawButtons = ["To Board", "Select number of players"]
-const values = []
+let winner = ""
+let value = 0
 
 class CardObject {
     constructor(code, image, value, suit, number, facedown){
@@ -93,6 +94,16 @@ $($players).on("submit", function(event){
                     }
                     drawnCard.value = parseInt(drawnCard.value)
                     player.card = drawnCard
+                    if (winner === "") {
+                        winner = player.name
+                        value = drawnCard.value
+                    } else if (drawnCard.value > value){
+                        winner = player.name
+                        value = drawnCard.value
+                    } else if (drawnCard.value === value){
+                        winner = `${winner} and ${player.name}`
+                    }
+                    console.log(winner)
                     // console.log(player.card)
                     playerHands.push(player)
                     menuButtons.splice(i,0,player.button)
@@ -111,19 +122,10 @@ $($players).on("submit", function(event){
                     $hand.append($card)
             })
     }
-    let p1 = $("#1")
     // console.log(playerHands)
-    console.log(p1)
-    // $left.html(
-    //     `<form class="card-back">
-    //     <input type="text" placeholder="Paste link here"></br>
-    //     <input type="submit" value="Save">
-    // </form>
-    // <form class="save-game">
-    //     <input type="text" placeholder="Name game"></br>
-    //     <input type="submit" value="Save">
-    // </form>`    
-    // )
+    $winner.html(
+        `<p class="players winner">${winner}</p>`    
+    )
 })
 
 // CREATES OBJECT FOR DRAWN CARD(S) (count=1) FROM THE DECK
